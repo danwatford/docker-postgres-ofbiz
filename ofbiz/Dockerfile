@@ -2,7 +2,7 @@ FROM openjdk:8-jdk
 
 ENV JAVA_OPTS -Xmx2G
 
-COPY /apache-ofbiz-17.12.04 /ofbiz
+COPY /apache-ofbiz /ofbiz
 WORKDIR /ofbiz
 
 RUN /ofbiz/gradle/init-gradle-wrapper.sh

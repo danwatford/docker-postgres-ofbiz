@@ -34,10 +34,19 @@ Ofbiz sources are built using gradle inside the new image.
 The entity engine configuration is then modified to refer to the
 local postgres datasource rather than the default derby datasource.
 
+### Get Ofbiz
+
+You will need to download Apache Ofbiz and extract the contents to such that file build.gradle is accessible
+at `ofbiz/apache-ofbiz/build.gradle`.
+
+Download from https://ofbiz.apache.org/download.html
+
 # First run
 
 The first time Ofbiz is executed it is necessary to atleast load seed data.
 It might also be appropriate to load demo data.
+
+If restoring from a dump file, skip this section.
 
 Build the ofbiz container:
 `docker-compose build`
