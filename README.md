@@ -41,6 +41,24 @@ at `ofbiz/apache-ofbiz/build.gradle`.
 
 Download from https://ofbiz.apache.org/download.html
 
+### Example if using the stable release
+
+Assuming this repository has been checked out to $HOME/apps/docker-postgres-ofbiz.
+
+- Download the stable release zip file from https://ofbiz.apache.org/download.html
+- Save the downloaded zip file to directory $HOME/apps/docker-postgres-ofbiz/ofbiz.
+- Extract the zip file in place: `unzip apache-ofbiz-*.zip`
+- Rename the extracted directory to apache-ofbiz.
+
+### Example if using the trunk branch
+
+Assuming this repository has been checked out to $HOME/apps/docker-postgres-ofbiz-trunk.
+
+At the terminal:
+
+- Change to the ofbiz directory: `cd $HOME/apps/docker-postgres-ofbiz-trunk/ofbiz`
+- Clone the ofbiz-framework repo to the apache-ofbiz directory: `git clone https://github.com/apache/ofbiz-framework.git apache-ofbiz`
+
 # First run
 
 The first time Ofbiz is executed it is necessary to at least load the seed data.
