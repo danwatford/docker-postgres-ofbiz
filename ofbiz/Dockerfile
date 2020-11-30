@@ -18,5 +18,5 @@ RUN sed -i "/Libraries downloaded manually/ a runtime 'org.postgresql:postgresql
 RUN cat /ofbiz/build.gradle
 
 
-ENTRYPOINT [ "/ofbiz/gradlew" ]
+ENTRYPOINT [ "/ofbiz/gradlew", "--no-daemon" ]
 CMD ["ofbiz"]
