@@ -9,16 +9,16 @@ This docker-compose configuration consists of two containers:
 
 The postgres DBMS keeps all its data in volumes internal to the container.
 
-Databases and users to support the Ofbiz application are configured in:
-`script docker-entrypoint-initdb.d/init-user-db.sh.`
+Databases and users to support the Ofbiz application are configured in script:
+`docker-entrypoint-initdb.d/init-user-db.sh.`
 
 Database usernames and passwords have been chosen to correspond to defaults
 or postgres in Ofbiz to reduce the number of configuration changes needed in
-Ofbiz. This shouldn't pose a security issue and the database will not be
+Ofbiz. This shouldn't pose a security issue as the database will not be
 accessible outside of the docker-compose configuration.
 
 Backups of the databases are performed using pg_dump, with files written to
-a dumps directory with is on a volume mounted from the docker host.
+a dumps directory which is on a volume mounted from the docker host.
 
 Run script, `backup_db.sh`, to dump the ofbiz database to the dbdumps directory.
 
@@ -36,30 +36,31 @@ local postgres datasource rather than the default derby datasource.
 
 ### Get Ofbiz
 
-You will need to download Apache Ofbiz and extract the contents to such that file build.gradle is accessible
+You will need to download Apache Ofbiz and extract the contents such that file build.gradle is accessible
 at `ofbiz/apache-ofbiz/build.gradle`.
 
 Download from https://ofbiz.apache.org/download.html
 
 # First run
 
-The first time Ofbiz is executed it is necessary to atleast load seed data.
+The first time Ofbiz is executed it is necessary to at least load the seed data.
 It might also be appropriate to load demo data.
-
-If restoring from a dump file, skip this section.
 
 Build the ofbiz container:
 `docker-compose build`
 
-Either way ensure the database is running:
+Ensure the database is running:
 `docker-compose up -d db`
 
-If loading all data run:
+If loading all data run (do not do this if restoring from a database dump):
 `docker-compose run ofbiz loadAll`
 
 # Normal running
 
-Once data has been loaded to the database using data loading, or possibly database restore, then run ofbiz using:
+It is recommended to bring up the database first if restoring from a database dump:
+`docker-compose up -d db`
+
+Once data has been loaded to the database using data loading (see First Run section above), or possibly a database restore, run ofbiz using:
 `docker-compose up -d`
 
 Database and ofbiz logs can be seen using:
@@ -69,5 +70,3 @@ The ofbiz container exposes ports 8080 and 8443. Example URLS:
 
 - http://localhost:8080/partymgr
 - https://localhost:8443/partymgr
--
--
