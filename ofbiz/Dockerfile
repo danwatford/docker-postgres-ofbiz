@@ -14,7 +14,7 @@ RUN ./gradlew build
 
 # Configure entity engine to use the localpostgres datasource.
 RUN sed -i 's/datasource-name="localderby"/datasource-name="localpostgres"/g; s#jdbc:postgresql://127.0.0.1/ofbiz#jdbc:postgresql://db/ofbiz#g' /ofbiz/framework/entity/config/entityengine.xml 
-RUN sed -i "/Libraries downloaded manually/ a runtime 'org.postgresql:postgresql:42.2.18'" /ofbiz/build.gradle
+RUN sed -i "/^dependencies {/ a runtime 'org.postgresql:postgresql:42.2.18'" /ofbiz/build.gradle
 RUN cat /ofbiz/build.gradle
 
 
