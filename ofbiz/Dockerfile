@@ -17,6 +17,7 @@ RUN sed -i 's/datasource-name="localderby"/datasource-name="localpostgres"/g; s#
 RUN sed -i "/^dependencies {/ a runtime 'org.postgresql:postgresql:42.2.18'" /ofbiz/build.gradle
 RUN cat /ofbiz/build.gradle
 
+COPY send_ofbiz_stop_signal.sh /
 
 ENTRYPOINT [ "/ofbiz/gradlew", "--no-daemon" ]
 CMD ["ofbiz"]
