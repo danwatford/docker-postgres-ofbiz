@@ -19,7 +19,7 @@ PREV_LOG_LENGTH_LINES=$(docker-compose logs db | wc -l)
 docker-compose up -d db
 echo "Database startup in progress..."
 
-# Log string to match on.
+# Log strings to match on.
 INIT_COMPLETE_STRING="PostgreSQL init process complete"
 SKIPPING_INIT_STRING="Skipping initialization"
 DB_READY_STRING="database system is ready to accept connections"

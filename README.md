@@ -5,6 +5,83 @@ This docker-compose configuration consists of two containers:
 - a standard postgres container
 - an OFBiz container built using the OpenJDK 8 container image.
 
+Several scripts have been created to assist with creating an OFBiz deployment.
+
+These scripts can be run in a Unix environment where Docker (docker-compose) is available.
+
+# Quick start: OFBiz with demo data
+
+[Note: do not do this if restoring from a database dump]
+
+The recommended way to evaulate OFBiz is to use Demo data. This is the same data loaded on the OFBiz project's demo sites, accessible here https://ofbiz.apache.org/ofbiz-demos.html
+
+## First run
+
+To initialise your OFBIz deployment, run the script:
+>`./init_ofbiz_with_demo_data.sh`
+
+This script will:
+* Download OFBiz sources (currently v18.12.06)
+* Pull necessary docker base images
+* Build the OFBiz docker image
+* Launch the database service
+* Load demo data to the database
+* Launch the OFBiz service
+
+Once complete you should be able to access OFBiz URLs such as:
+- https://localhost:8443/partymgr
+- https://localhost:8443/accounting
+
+Your browser may warn that the website is unsecure. This is due to the self-signed certificates used to protect the TLS (https) connection. In this case you can confirm the site as safe to your browser and continue.
+
+
+# Deploying OFBiz with seed data
+
+[Note: do not do this if restoring from a database dump]
+
+Deploying with seed data rather than demo data can involve a lot of work, but it will help you ensure you have a 'clean' system tailored to your specific requirements.
+
+At the very minimum you will need to create a Party Group representing your organisation, and configure this group with the role, Internal Organisation.
+
+## First run
+
+To initialise your OFBIz deployment using seed data, run the script:
+>`./init_ofbiz_with_seed_data.sh`
+
+This script will:
+* Download OFBiz sources (currently v18.12.06)
+* Pull necessary docker base images
+* Build the OFBiz docker image
+* Launch the database service
+* Load the seed data to the database
+* Launch the OFBiz service
+
+Once complete you should be able to access OFBiz URLs such as:
+- https://localhost:8443/partymgr
+- https://localhost:8443/accounting
+
+Your browser may warn that the website is unsecure. This is due to the self-signed certificates used to protect the TLS (https) connection. In this case you can confirm the site as safe to your browser and continue.
+
+# Shut down
+
+To stop OFBiz and the database from running, use the script:
+>`./stop.sh`
+
+This script will:
+* Send a signal to OFBiz and wait for it to perform a graceful shutdown.
+* Shutdown the database service.
+
+# Normal running
+
+To start OFBiz again, use the script:
+>`./start.sh`
+
+This script will:
+* Start the database service and wait for the database to be ready.
+* Start the OFBiz service and wait for OFBiz to be ready.
+
+# About the containers
+
 ## Postgres
 
 The postgres DBMS keeps all its data in volumes internal to the container.
@@ -26,7 +103,7 @@ will sort the dump files in the dbdumps directory and restore to the ofbiz datab
 
 ## OFBiz
 
-The OFBiz container is built as part of this docker-compose configuration, based on the OpenJDK 8 image.
+The OFBiz container is built as part of the docker-compose configuration, based on the OpenJDK 8 image.
 
 OFBiz sources are built using gradle inside the new image.
 
@@ -35,10 +112,15 @@ local postgres datasource rather than the default derby datasource.
 
 ### Get OFBiz
 
-You will need to download Apache OFBiz and extract the contents such that file build.gradle is accessible
-at `ofbiz/apache-ofbiz/build.gradle`.
+If using the `init_ofbiz_with_seed_data.sh` or `init_ofbiz_with_demo_data.sh` scripts, then the sources will be retrieved automatically using
+`scripts/get_ofbiz_sources_if_needed.sh`.
 
-Download from https://ofbiz.apache.org/download.html
+However if you wish to obtain sources from elsewhere - such as the git repository or a different release - place them in the `ofbiz/apache-ofbiz`
+directory and they will be picked up by the container build process.
+
+If the `ofbiz/apache-ofbiz` directory already exists, the `get_ofbiz_sources_if_needed.sh` won't overwrite them. 
+
+OFBiz can be downloaded from https://ofbiz.apache.org/download.html
 
 ### Example if using the stable release
 
@@ -59,46 +141,3 @@ At the terminal:
 > `cd $HOME/apps/docker-postgres-ofbiz-trunk/ofbiz`
 - Clone the ofbiz-framework repo to the apache-ofbiz directory:
 > `git clone https://github.com/apache/ofbiz-framework.git apache-ofbiz`
-
-# First run
-
-The first time OFBiz is executed you will need to load seed data. You can choose either minimal seed data or the demo data set.
-
-Regardless of the data to be loaded, you will need to build container images and start the database service.
-
-Build the ofbiz container image:
->`docker-compose build`
-
-Ensure the database is running:
->`./start_db.sh`
-
-The above script will start the database container and wait until the database is ready to accept connections.
-
-## Loading demo data
-
-If you are evaluating OFBiz, once of the easiest ways to get started is to load the demonstration data.
-If loading all demo data run (do not do this if restoring from a database dump):
-> `docker-compose run ofbiz loadAll`
-
-## Loading minimal seed data
-If loading just the seed data run (do not do this if restoring from a database dump):
-> `docker-compose run ofbiz "ofbiz --load-data readers=seed,seed-initial" loadAdminUserLogin -PuserLoginId=admin`
-
-The above command will load OFBiz's seed data and create an administrative user called `admin` with password `ofbiz`.
-This user will be prompted to change their password when they first log in.
-
-# Normal running
-
-It is recommended to bring up the database first if restoring from a database dump:
->`./start_db.sh`
-
-Once data has been loaded to the database using data loading (see First Run section above), or possibly a database restore, run ofbiz using:
-> `docker-compose up -d`
-
-Database and ofbiz logs can be seen using:
-> `docker-compose logs -f`
-
-The ofbiz container exposes ports 8080 and 8443. Example URLs:
-
-- http://localhost:8080/partymgr
-- https://localhost:8443/partymgr
