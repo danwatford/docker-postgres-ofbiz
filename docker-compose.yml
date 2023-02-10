@@ -24,7 +24,7 @@ services:
       - db
     ports:
       - 8443:8443
-      - 15005:5005
+      - 127.0.0.1:15005:5005
     # command: ["ofbiz", "--debug-jvm"]
     # command: ["loadAll"]
     # command: ["/ofbiz/gradlew", "ofbiz"]
