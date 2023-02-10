@@ -10,10 +10,10 @@ echo "Retrieving OFBiz sources"
 "$SCRIPT_DIR/scripts/get_ofbiz_sources_if_needed.sh"
 
 echo "Retrieving base docker images"
-docker-compose pull
+docker compose pull
 
 echo "Building OFBiz docker image"
-docker-compose build
+docker compose build
 
 echo "Starting database service"
 "$SCRIPT_DIR/scripts/start_db.sh"

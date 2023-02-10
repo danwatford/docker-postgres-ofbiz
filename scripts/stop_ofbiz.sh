@@ -5,19 +5,19 @@ set -e
 TIMEOUT_SEC=20
 
 # Check if the ofbiz service is running.
-RUNNING_OFBIZ_SERVICE_ID=$(docker-compose ps --quiet --filter status=running ofbiz 2>/dev/null || true)
+RUNNING_OFBIZ_SERVICE_ID=$(docker compose ps --quiet --filter status=running ofbiz 2>/dev/null || true)
 if [ -z "$RUNNING_OFBIZ_SERVICE_ID" ]; then
     echo "OFBiz service is not running."
     exit 0
 fi
 
 echo "OFBiz service is running. Stopping..."
-docker-compose exec ofbiz /send_ofbiz_stop_signal.sh
+docker compose exec ofbiz /send_ofbiz_stop_signal.sh
 
 # Wait for the ofbiz service to stop.
 loopCount=0
 while (true); do
-    EXITED_OFBIZ_SERVICE_ID=$(docker-compose ps --quiet --filter status=exited ofbiz)
+    EXITED_OFBIZ_SERVICE_ID=$(docker compose ps --quiet --filter status=exited ofbiz)
     if [ -n "$EXITED_OFBIZ_SERVICE_ID" ]; then
         echo "OFBiz service has shutdown. Container ID: $EXITED_OFBIZ_SERVICE_ID"
         exit 0

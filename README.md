@@ -1,13 +1,13 @@
-# Docker-compose configuration for running OFBiz with a PostgreSQL database.
+# docker compose configuration for running OFBiz with a PostgreSQL database.
 
-This docker-compose configuration consists of two containers:
+This docker compose configuration consists of two containers:
 
 - a standard postgres container
 - an OFBiz container built using the OpenJDK 8 container image.
 
 Several scripts have been created to assist with creating an OFBiz deployment.
 
-These scripts can be run in a Unix environment where Docker (docker-compose) is available.
+These scripts can be run in a Unix environment where Docker (docker compose) is available.
 
 # Quick start: OFBiz with demo data
 
@@ -91,7 +91,7 @@ Databases and users to support the OFBiz application are configured in script `d
 Database usernames and passwords have been chosen to correspond to defaults
 of postgres in OFBiz to reduce the number of configuration changes needed in
 OFBiz. This shouldn't pose a security issue as the database will not be
-accessible outside of the docker-compose configuration.
+accessible outside of the docker compose configuration.
 
 Backups of the databases are performed using pg_dump, with files written to
 a dumps directory which is on a volume mounted from the docker host.
@@ -103,7 +103,7 @@ will sort the dump files in the dbdumps directory and restore to the ofbiz datab
 
 ## OFBiz
 
-The OFBiz container is built as part of the docker-compose configuration, based on the OpenJDK 8 image.
+The OFBiz container is built as part of the docker compose configuration, based on the OpenJDK 8 image.
 
 OFBiz sources are built using gradle inside the new image.
 
