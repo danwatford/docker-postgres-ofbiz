@@ -13,7 +13,7 @@ echo "Retrieving base docker images"
 docker compose pull
 
 echo "Building OFBiz docker image"
-docker compose build
+docker compose build --progress plain
 
 echo "Starting database service"
 "$SCRIPT_DIR/scripts/start_db.sh"

@@ -3,7 +3,7 @@
 This docker compose configuration consists of two containers:
 
 - a standard postgres container
-- an OFBiz container built using the OpenJDK 8 container image.
+- an OFBiz container built using the Eclipse Temurin JDK 17 container image.
 
 Several scripts have been created to assist with creating an OFBiz deployment.
 
@@ -21,7 +21,7 @@ To initialise your OFBIz deployment, run the script:
 >`./init_ofbiz_with_demo_data.sh`
 
 This script will:
-* Download OFBiz sources (currently v18.12.06)
+* Download OFBiz sources (currently the release 22.01 branch)
 * Pull necessary docker base images
 * Build the OFBiz docker image
 * Launch the database service
@@ -49,7 +49,7 @@ To initialise your OFBIz deployment using seed data, run the script:
 >`./init_ofbiz_with_seed_data.sh`
 
 This script will:
-* Download OFBiz sources (currently v18.12.06)
+* Download OFBiz sources (currently the release 22.01 branch)
 * Pull necessary docker base images
 * Build the OFBiz docker image
 * Launch the database service

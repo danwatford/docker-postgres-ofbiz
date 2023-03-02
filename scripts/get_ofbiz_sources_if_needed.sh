@@ -3,8 +3,15 @@ set -e
 
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 OFBIZ_TARGET_DIR="$SCRIPT_DIR/../ofbiz/apache-ofbiz"
-SOURCES_ZIP_URL="https://dlcdn.apache.org/ofbiz/apache-ofbiz-18.12.06.zip"
-SOURCES_ZIP_FILE="$SCRIPT_DIR/../ofbiz/apache-ofbiz-18.12.06.zip"
+
+# Uncomment to download the official 18.12 release
+# SOURCES_ZIP_URL="https://dlcdn.apache.org/ofbiz/apache-ofbiz-18.12.06.zip"
+# SOURCES_ZIP_FILE="$SCRIPT_DIR/../ofbiz/apache-ofbiz-18.12.06.zip"
+
+# Uncomment to download the release22.01 branch. Note that this is not an official release but
+# is a snapshot of the OFBiz sources at the time of downloading.
+SOURCES_ZIP_URL="https://github.com/apache/ofbiz-framework/archive/refs/heads/release22.01.zip"
+SOURCES_ZIP_FILE="$SCRIPT_DIR/../ofbiz/release22.01.zip"
 
 if [ -d "$OFBIZ_TARGET_DIR" ]; then
     echo "OFBiz sources already exist. Skipping download: $OFBIZ_TARGET_DIR"
