@@ -17,8 +17,8 @@ services:
 
   ofbiz:
     build: ofbiz
-    mem_limit: 1600M
-    memswap_limit: 1600M
+    mem_limit: 2400M
+    memswap_limit: 2400M
     cpu_shares: 200
     depends_on:
       - db
