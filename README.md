@@ -1,3 +1,10 @@
+Docker is now supported directly by the Apache OFBiz project. Please see https://github.com/apache/ofbiz-framework/blob/trunk/DOCKER.adoc
+
+As a result, this repository is no longer maintained and has been archived.
+
+---
+
+
 # docker compose configuration for running OFBiz with a PostgreSQL database.
 
 This docker compose configuration consists of two containers:
